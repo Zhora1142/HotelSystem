@@ -1,0 +1,170 @@
+<Window x:Class="HotelSystem.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="HotelSystem - Панель администратора" Height="720" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Margin="0,0,0,10" LastChildFill="False">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                <Button Content="Обновить" Width="100" Margin="0,0,10,0" Command="{Binding RefreshCommand}"/>
+            </StackPanel>
+            <Button DockPanel.Dock="Right"
+                    Content="Выход"
+                    Width="100"
+                    Command="{Binding LogoutCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </DockPanel>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Клиенты">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                            <DataGridTextColumn Header="ФИО / организация" Binding="{Binding FullName}" Width="*"/>
+                            <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="140"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="180"/>
+                            <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="120"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button Content="Добавить клиента" Width="140" Margin="0,0,10,0" Command="{Binding AddClientCommand}"/>
+                        <Button Content="Удалить клиента" Width="140" Command="{Binding DeleteClientCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Типы номеров">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid ItemsSource="{Binding RoomTypes}" SelectedItem="{Binding SelectedRoomType}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="160"/>
+                            <DataGridTextColumn Header="Вместимость" Binding="{Binding Capacity}" Width="120"/>
+                            <DataGridTextColumn Header="Цена за ночь" Binding="{Binding PricePerNight, StringFormat={}{0:N2}}" Width="140"/>
+                            <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button Content="Добавить тип номера" Width="170" Margin="0,0,10,0" Command="{Binding AddRoomTypeCommand}"/>
+                        <Button Content="Редактировать тип" Width="160" Command="{Binding EditRoomTypeCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Номера">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid ItemsSource="{Binding Rooms}" SelectedItem="{Binding SelectedRoom}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Номер" Binding="{Binding Number}" Width="90"/>
+                            <DataGridTextColumn Header="Этаж" Binding="{Binding Floor}" Width="80"/>
+                            <DataGridTextColumn Header="Тип" Binding="{Binding RoomTypeName}" Width="140"/>
+                            <DataGridTextColumn Header="Вместимость" Binding="{Binding Capacity}" Width="100"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding PricePerNight, StringFormat={}{0:N2}}" Width="110"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding StatusName}" Width="130"/>
+                            <DataGridTextColumn Header="Примечание" Binding="{Binding Note}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button Content="Добавить номер" Width="140" Margin="0,0,10,0" Command="{Binding AddRoomCommand}"/>
+                        <Button Content="Редактировать номер" Width="170" Margin="0,0,10,0" Command="{Binding EditRoomCommand}"/>
+                        <Button Content="Сделать свободным" Width="150" Margin="0,0,10,0" Command="{Binding SetRoomAvailableCommand}"/>
+                        <Button Content="В обслуживание" Width="150" Command="{Binding SetRoomMaintenanceCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Бронирования">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid ItemsSource="{Binding Bookings}" SelectedItem="{Binding SelectedBooking}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60"/>
+                            <DataGridTextColumn Header="Клиент" Binding="{Binding ClientName}" Width="*"/>
+                            <DataGridTextColumn Header="Номер" Binding="{Binding RoomNumber}" Width="80"/>
+                            <DataGridTextColumn Header="Тип номера" Binding="{Binding RoomTypeName}" Width="140"/>
+                            <DataGridTextColumn Header="Заезд" Binding="{Binding CheckInDate, StringFormat={}{0:dd.MM.yyyy}}" Width="100"/>
+                            <DataGridTextColumn Header="Выезд" Binding="{Binding CheckOutDate, StringFormat={}{0:dd.MM.yyyy}}" Width="100"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding StatusName}" Width="100"/>
+                            <DataGridTextColumn Header="Итого" Binding="{Binding TotalCost, StringFormat={}{0:N2}}" Width="110"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <WrapPanel Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button Content="Создать бронь" Width="130" Margin="0,0,10,10" Command="{Binding AddBookingCommand}"/>
+                        <Button Content="Заселить" Width="110" Margin="0,0,10,10" Command="{Binding CheckInBookingCommand}"/>
+                        <Button Content="Завершить" Width="110" Margin="0,0,10,10" Command="{Binding CompleteBookingCommand}"/>
+                        <Button Content="Отменить" Width="110" Margin="0,0,10,10" Command="{Binding CancelBookingCommand}"/>
+                        <Button Content="Добавить услугу" Width="140" Margin="0,0,10,10" Command="{Binding AddServiceToBookingCommand}"/>
+                        <Button Content="Детали" Width="110" Margin="0,0,0,10" Command="{Binding ViewBookingDetailsCommand}"/>
+                    </WrapPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Услуги">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="180"/>
+                            <DataGridTextColumn Header="Стоимость" Binding="{Binding Price, StringFormat={}{0:N2}}" Width="120"/>
+                            <DataGridTextColumn Header="Тип начисления" Binding="{Binding ChargeTypeName}" Width="140"/>
+                            <DataGridCheckBoxColumn Header="Активна" Binding="{Binding IsActive}" Width="80"/>
+                            <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                        <Button Content="Добавить услугу" Width="140" Margin="0,0,10,0" Command="{Binding AddServiceCommand}"/>
+                        <Button Content="Редактировать" Width="140" Margin="0,0,10,0" Command="{Binding EditServiceCommand}"/>
+                        <Button Content="Скрыть" Width="120" Command="{Binding DeleteServiceCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Статистика">
+                <Grid Margin="20">
+                    <TextBlock Text="{Binding StatsText}" FontSize="18" TextWrapping="Wrap"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Отчеты">
+                <Grid Margin="20">
+                    <StackPanel Width="420">
+                        <TextBlock Text="Период отчетов" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBlock Text="С:" Width="30" VerticalAlignment="Center"/>
+                            <DatePicker SelectedDate="{Binding ReportDateFrom}" Width="180"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                            <TextBlock Text="По:" Width="30" VerticalAlignment="Center"/>
+                            <DatePicker SelectedDate="{Binding ReportDateTo}" Width="180"/>
+                        </StackPanel>
+                        <Button Content="Экспорт отчета по заполненности" Height="36" Margin="0,0,0,10" Command="{Binding ExportOccupancyCommand}"/>
+                        <Button Content="Экспорт отчета по выручке" Height="36" Command="{Binding ExportRevenueCommand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

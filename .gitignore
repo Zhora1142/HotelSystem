@@ -1,0 +1,13 @@
+# Артефакты сборки .NET
+bin/
+obj/
+
+# Локальные файлы Visual Studio / Rider
+.vs/
+*.user
+*.rsuser
+*.suo
+
+# Системный мусор
+.DS_Store
+Thumbs.db

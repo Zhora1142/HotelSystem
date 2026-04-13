@@ -1,0 +1,35 @@
+<Window x:Class="HotelSystem.WPF.BookingDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Детали бронирования" Height="560" Width="860"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding HeaderText}" FontSize="18" TextWrapping="Wrap" Margin="0,0,0,16"/>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Услуги">
+                <DataGrid ItemsSource="{Binding Services}" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Услуга" Binding="{Binding ServiceName}" Width="*"/>
+                        <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="120"/>
+                        <DataGridTextColumn Header="Стоимость" Binding="{Binding TotalPrice, StringFormat={}{0:N2}}" Width="140"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="История">
+                <DataGrid ItemsSource="{Binding Transactions}" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat={}{0:dd.MM.yyyy HH:mm}}" Width="150"/>
+                        <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*"/>
+                        <DataGridTextColumn Header="Сумма" Binding="{Binding Amount, StringFormat={}{0:N2}}" Width="140"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

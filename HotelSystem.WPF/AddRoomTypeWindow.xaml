@@ -1,0 +1,42 @@
+<Window x:Class="HotelSystem.WPF.AddRoomTypeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{Binding OperationTitle}" Height="280" Width="420"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Название:" Margin="0,0,10,10" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" Margin="0,0,0,10" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Grid.Row="1" Text="Вместимость:" Margin="0,0,10,10" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" Text="{Binding Capacity, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Grid.Row="2" Text="Цена за ночь:" Margin="0,0,10,10" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,0,10" Text="{Binding PricePerNight, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Grid.Row="3" Text="Описание:" Margin="0,0,10,10" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Сохранить"
+                    Width="100"
+                    Height="32"
+                    Margin="0,0,10,0"
+                    IsDefault="True"
+                    Command="{Binding SaveCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Button Content="Отмена" Width="100" Height="32" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

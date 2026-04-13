@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="HotelSystem.BLL/HotelSystem.BLL.csproj" />
+  <Project Path="HotelSystem.DAL/HotelSystem.DAL.csproj" />
+  <Project Path="HotelSystem.Domain/HotelSystem.Domain.csproj" />
+  <Project Path="HotelSystem.WPF/HotelSystem.WPF.csproj" />
+</Solution>
